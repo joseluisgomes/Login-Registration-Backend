@@ -9,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Objects;
 
 @Entity(name = "AppUser")
 @Table(name = "appuser")
@@ -170,5 +169,21 @@ public class AppUser implements UserDetails {
             on some architectures : 31 * i == (i << 5) - i
          */
         return 31 * username.hashCode() + email.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", appUserRole=" + appUserRole +
+                ", locked=" + locked +
+                ", expired=" + expired +
+                ", enabled=" + enabled +
+                ", credentialsExpired=" + credentialsExpired +
+                '}';
     }
 }
