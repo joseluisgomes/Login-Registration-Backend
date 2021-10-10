@@ -11,7 +11,15 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity(name = "AppUser")
-@Table(name = "appuser")
+@Table(
+        name = "app_user",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "username_unique",
+                        columnNames = "username"
+                )
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,7 +28,8 @@ public class AppUser implements UserDetails {
     @Id
     @SequenceGenerator(
             name = "user_id_sequence",
-            sequenceName = "user_id_sequence"
+            sequenceName = "user_id_sequence",
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
@@ -42,7 +51,6 @@ public class AppUser implements UserDetails {
 
     @Column(
             name = "username",
-            unique = true,
             nullable = false,
             columnDefinition = "TEXT"
     )
@@ -62,10 +70,7 @@ public class AppUser implements UserDetails {
     )
     private String password;
 
-    @Column(
-            name = "user_role",
-            nullable = false
-    )
+    @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
 
     @Column(
